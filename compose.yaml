@@ -1,0 +1,24 @@
+#configuration of services provided by docker itself.
+
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=demo'
+      - 'POSTGRES_PASSWORD=varsha'
+      - 'POSTGRES_USER=user'
+    ports:
+      - '5435:5432'          #docker-postgres
+    volumes:
+      - 'postgres_data:/var/lib/postgresql/data'
+  pgadmin:
+    image: 'dpage/pgadmin4'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'admin@admin.com'
+      PGADMIN_DEFAULT_PASSWORD: 'admin'
+    ports:
+        - '8888:80'    #docker-pgadmin (docker accessing pgadmin on 8888)
+    depends_on:
+        - 'postgres'
+volumes:
+  postgres_data:
