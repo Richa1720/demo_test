@@ -56,7 +56,6 @@ public class DepartmentController {
     public ResponseEntity<String> deleteDepartment(@PathVariable("id") int departmentId)
     {
         departmentSevice.deleteDepartment(departmentId);
-
         return new ResponseEntity<>("Department deleted Successfully",HttpStatus.OK);
     }
 
