@@ -13,7 +13,7 @@ public class DemoTestApplication {
 		System.out.println("Running project demo_test...");
 		System.out.println("Running project demo_test...");
 		System.out.println("Running project demo_test...");
-		System.out.println("Varsha Testing post code pushed on git and again after mo difications  ");
+		System.out.println("Varsha Testing post code pushed on git and again after modifications ... ");
 	}
 
 }
