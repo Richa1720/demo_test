@@ -21,8 +21,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        //.csrf().ignoringAntMatchers("/api/**")  // Skip CSRF for specific /api endpoints
+
         http
-                .csrf(csrf -> csrf.disable())  // Disable CSRF for APIs
+                .csrf(csrf -> csrf.disable())  // Disable CSRF for APIs OR
+                // .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/authenticate").permitAll()  // Permit the /authenticate endpoint
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")

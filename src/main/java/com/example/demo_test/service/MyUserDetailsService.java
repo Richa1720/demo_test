@@ -19,19 +19,24 @@ public class MyUserDetailsService implements UserDetailsService {
 //here roles() method indicates role
 //build() -> builds the objects and returns it or null
 
-
     @Override
     public UserDetails loadUserByUsername(String username) {
         if ("user".contains(username)) {
-            return User.withDefaultPasswordEncoder().username("user").password("password").roles("USER").build();
+            return User
+                    .withDefaultPasswordEncoder()
+                    .username("user")
+                    .password("password")
+                    .roles("USER")
+                    .build();
 
         }
         else if ("admin".contains(username)) {
-            return User
+            UserDetails user=User
                     .withUsername("admin")
                     .password("{noop}admin")
                     .roles("ADMIN")
                     .build();
+            return user;
 
             // withDefaultPasswordEncoder() is mandatory to encode the password
 

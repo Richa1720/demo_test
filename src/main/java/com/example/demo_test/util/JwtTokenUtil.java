@@ -4,6 +4,7 @@ package com.example.demo_test.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ public class JwtTokenUtil {
     private String SECRET_KEY = "your_secret_key";
 
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return extractClaim(token, Claims::getSubject);   //username is sub here
     }
 
     public Date extractExpiration(String token) {
@@ -33,7 +34,9 @@ public class JwtTokenUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();  //Jwts has static method parser()
+        /* JwtParser has setSigningKey(String s) , parseClaimsJws(String s) has Claims return type
+        and getBody() is from Jwts class  */
     }
 
     private Boolean isTokenExpired(String token) {
@@ -41,9 +44,9 @@ public class JwtTokenUtil {
     }
 
     public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>();   //required
         List<String> roles = userDetails.getAuthorities().stream()
-                .map(grantedAuthority -> grantedAuthority.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         claims.put("roles", roles);  // Include roles in the token claims
         return createToken(claims, userDetails.getUsername());

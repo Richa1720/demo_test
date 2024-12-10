@@ -18,11 +18,18 @@ public class JwtAuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+
+
+    // 3 injected to generate token by passing userDetails
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+
+    //2 step
     @Autowired
     private MyUserDetailsService userDetailsService;
+
+
 
     @PostMapping("/authenticate")
     public String createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception
@@ -31,7 +38,7 @@ public class JwtAuthenticationController {
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername()); //loading data from UDS
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 
         return jwt;
